@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\KvizResurs;
 use App\Models\Kviz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KvizController extends Controller
 {
@@ -14,7 +16,9 @@ class KvizController extends Controller
      */
     public function index()
     {
-        //
+        $kvizovi = DB::table('kvizs')->get();
+
+        return KvizResurs::collection($kvizovi);
     }
 
     /**
@@ -46,7 +50,7 @@ class KvizController extends Controller
      */
     public function show(Kviz $kviz)
     {
-        //
+        return new KvizResurs($kviz);
     }
 
     /**
@@ -80,6 +84,8 @@ class KvizController extends Controller
      */
     public function destroy(Kviz $kviz)
     {
-        //
+        $kviz->delete();
+
+        return response()->json('Kviz je obrisan');
     }
 }

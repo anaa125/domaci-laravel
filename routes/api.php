@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('kviz', KvizController::class);
-Route::resource('takmicar', TakmicarController::class);
+Route::resource('kviz', KvizController::class)->only('index', 'show', 'destroy');
+Route::resource('takmicar', TakmicarController::class)->only('index', 'show', 'update');
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

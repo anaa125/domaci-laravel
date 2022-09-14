@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TakmicarResurs;
 use App\Models\Takmicar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TakmicarController extends Controller
 {
@@ -14,7 +17,9 @@ class TakmicarController extends Controller
      */
     public function index()
     {
-        //
+        $takmicari = DB::table('takmicars')->get();
+
+        return TakmicarResurs::collection($takmicari);
     }
 
     /**
@@ -46,7 +51,7 @@ class TakmicarController extends Controller
      */
     public function show(Takmicar $takmicar)
     {
-        //
+        return new TakmicarResurs($takmicar);
     }
 
     /**
@@ -69,7 +74,22 @@ class TakmicarController extends Controller
      */
     public function update(Request $request, Takmicar $takmicar)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'ime' => 'required|string',
+            'prezime' => 'required|string',
+            'godine' => 'required|integer',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $takmicar->ime = $request->ime;
+        $takmicar->prezime = $request->prezime;
+        $takmicar->godine = $request->godine;
+        $takmicar->save();
+
+        return response()->json('Takmicar je azuriran');
     }
 
     /**
