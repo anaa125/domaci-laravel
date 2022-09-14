@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\KvizController;
+use App\Http\Controllers\TakmicarController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::resource('kviz', KvizController::class);
+Route::resource('takmicar', TakmicarController::class);
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
