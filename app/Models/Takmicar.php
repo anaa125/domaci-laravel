@@ -10,6 +10,12 @@ class Takmicar extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'ime',
+        'prezime',
+        'godine',
+    ];
+
     public function ucesca()
     {
         return $this->hasMany(Ucesce::class);

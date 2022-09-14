@@ -11,6 +11,12 @@ class Ucesce extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'kviz_id',
+        'takmicar_id',
+        'rang',
+    ];
+
     public function kviz()
     {
         return $this->belongsTo(Kviz::class);

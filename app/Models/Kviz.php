@@ -10,6 +10,14 @@ class Kviz extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'naziv',
+        'televizija',
+        'trajanje',
+        'voditelj',
+        'nagrada'
+    ];
+
     public function ucesca()
     {
         return $this->hasMany(Ucesce::class);
