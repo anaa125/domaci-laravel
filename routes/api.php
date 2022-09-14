@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KvizController;
 use App\Http\Controllers\TakmicarController;
 use Illuminate\Http\Request;
@@ -16,10 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('kviz', KvizController::class)->only('index', 'show', 'destroy');
-Route::resource('takmicar', TakmicarController::class)->only('index', 'show', 'update');
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::resource('kviz', KvizController::class)->only('index', 'show', 'destroy');
+    Route::resource('takmicar', TakmicarController::class)->only('index', 'show', 'update');
+    Route::post('logout', [AuthController::class, 'logout']);
 });
